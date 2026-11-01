@@ -1,0 +1,44 @@
+name: Feature request
+description: Something KlarCam should do, or do better.
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for the idea. Issues are public: **never post your license key or your e-mail address.**
+  - type: dropdown
+    id: where
+    attributes:
+      label: Which part?
+      options:
+        - KlarCam app or its virtual camera
+        - OBS filter
+        - Both
+        - Documentation
+        - Something else
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: What do you want to achieve?
+      description: Describe the situation and what gets in the way today. The problem helps more than a finished solution.
+    validations:
+      required: true
+  - type: textarea
+    id: idea
+    attributes:
+      label: How could KlarCam help?
+      description: Your idea of the feature, a control, a look, a camera or an app to support.
+  - type: textarea
+    id: setup
+    attributes:
+      label: Your setup
+      description: Optional. Camera, the app you use KlarCam with (Zoom, Teams, OBS, ...), lighting.
+  - type: checkboxes
+    id: privacy
+    attributes:
+      label: Before you submit
+      options:
+        - label: My license key and my e-mail address appear nowhere in this request.
+          required: true

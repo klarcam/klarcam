@@ -1,0 +1,95 @@
+name: Bug report
+description: Something in the KlarCam app, the OBS filter or an installer does not work as described.
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting. Issues are public: **never post your license key or your e-mail address.** The license line shows your e-mail after "Licensed to"; remove it before you paste. Questions about a purchase or a key go to hello@klarcam.com.
+
+        The [troubleshooting page](https://github.com/klarcam/klarcam/blob/main/docs/troubleshooting.md) solves many problems and explains where to find the details asked for below.
+  - type: dropdown
+    id: where
+    attributes:
+      label: Where does it happen?
+      options:
+        - KlarCam app or its virtual camera
+        - OBS filter
+        - Both
+        - Installer or uninstaller
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What did you do, what did you expect, and what happened instead?
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1.
+        2.
+        3.
+  - type: input
+    id: klarcam-version
+    attributes:
+      label: KlarCam version
+      description: Windows Settings > Apps > Installed apps, or the OBS log line "[KlarCam] plugin loaded, version ...".
+      placeholder: "0.2.0"
+    validations:
+      required: true
+  - type: input
+    id: windows
+    attributes:
+      label: Windows version
+      description: Press Win+R and type winver.
+      placeholder: "Windows 11 24H2, build 26100.4652"
+    validations:
+      required: true
+  - type: input
+    id: gpu
+    attributes:
+      label: GPU and driver version
+      description: Device Manager > Display adapters > your GPU > Properties > Driver, or the vendor's app. Name every GPU if your computer has two.
+      placeholder: "NVIDIA GeForce RTX 3060, driver 581.57"
+    validations:
+      required: true
+  - type: input
+    id: obs
+    attributes:
+      label: OBS Studio version
+      description: For the OBS filter. OBS > Help > About.
+      placeholder: "33.0.0"
+  - type: input
+    id: camera
+    attributes:
+      label: Camera and format
+      description: The camera and, in the app, the format chosen under Camera > Format.
+      placeholder: "Logitech C920, 1920 x 1080, 30 fps"
+  - type: textarea
+    id: status
+    attributes:
+      label: Status lines
+      description: |
+        App: the lines of the Status section (Running on, Tracker, Pipeline, Face, Loop), or better the text of Status > Save diagnostics (the file is in Pictures\KlarCam; you may remove the computer name and your Windows user name).
+        OBS: the filter's Diagnostics group (Face tracker, Pipeline) and the lines starting with [KlarCam] from Help > Log Files > View Current Log.
+        Leave out the license line's e-mail address.
+      render: text
+    validations:
+      required: true
+  - type: textarea
+    id: media
+    attributes:
+      label: Screenshots or a short clip
+      description: Optional. For picture problems, a pair with A/B (original and processed) helps. Only post pictures you are fine with being public.
+  - type: checkboxes
+    id: privacy
+    attributes:
+      label: Before you submit
+      options:
+        - label: My license key and my e-mail address appear nowhere in this report.
+          required: true

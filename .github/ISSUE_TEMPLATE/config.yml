@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Purchase, invoice or license key
+    url: https://klarcam.com/key
+    about: Lost your key? This page sends it again. Anything else about a purchase or a key goes to hello@klarcam.com, never into a public issue.
+  - name: Feedback without a GitHub account
+    url: https://klarcam.com/feedback
+    about: The feedback form on klarcam.com.
+  - name: Terms
+    url: https://klarcam.com/terms
+    about: The terms for KlarCam. The English version is binding.

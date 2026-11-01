@@ -1,0 +1,32 @@
+name: Question
+description: How do I ...? What does this control do? Which setting fits my camera?
+labels: ["question"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Issues are public: **never post your license key or your e-mail address.** Questions about a purchase, an invoice or your key go to hello@klarcam.com.
+
+        Many answers are in the [parameter reference](https://github.com/klarcam/klarcam/blob/main/docs/parameters.md) and on the [troubleshooting page](https://github.com/klarcam/klarcam/blob/main/docs/troubleshooting.md).
+  - type: textarea
+    id: question
+    attributes:
+      label: Your question
+    validations:
+      required: true
+  - type: textarea
+    id: tried
+    attributes:
+      label: What you tried or read so far
+  - type: input
+    id: versions
+    attributes:
+      label: KlarCam version, and OBS version if it is about the filter
+      placeholder: "KlarCam 0.2.0, OBS 33.0.0"
+  - type: checkboxes
+    id: privacy
+    attributes:
+      label: Before you submit
+      options:
+        - label: My license key and my e-mail address appear nowhere in this question.
+          required: true
