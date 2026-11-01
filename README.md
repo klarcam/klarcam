@@ -63,7 +63,10 @@ both.
 | File | Installs | Get it |
 |---|---|---|
 | `KlarCam-Setup-0.2.0.exe` (about 35 MB) | The app with the virtual camera, optionally the OBS filter | [GitHub release](https://github.com/klarcam/klarcam/releases/latest) or [klarcam.com](https://klarcam.com/download/KlarCam-Setup-0.2.0.exe) (the same file) |
-| `KlarCam-OBS-Filter-Setup-0.2.0.exe` | Only the OBS filter | [GitHub release](https://github.com/klarcam/klarcam/releases/latest) |
+| `KlarCam-OBS-Filter-Setup-0.2.0.exe` (about 18 MB) | Only the OBS filter | [GitHub release](https://github.com/klarcam/klarcam/releases/latest) |
+
+Install one of the two: the app setup already includes the OBS filter, and the filter
+setup does not install while the KlarCam app is installed.
 
 The release notes list the SHA-256 of each file. To check a download, run this in
 PowerShell in your Downloads folder and compare the result:
@@ -79,11 +82,13 @@ button. Check the SHA-256 first.
 ## System requirements
 
 - Windows 10 or 11, 64-bit.
-- A graphics card with Direct3D 11: NVIDIA, AMD or Intel. KlarCam runs on the GPU.
+- A graphics card with Direct3D 12: NVIDIA, AMD or Intel. KlarCam renders the
+  picture with Direct3D 11 and runs the face tracking on DirectML, which needs
+  Direct3D 12.
 - For the filter: OBS Studio 33 or newer.
 - A camera Windows sees: a webcam, an HDMI capture card, or a software camera such
   as NVIDIA Broadcast or OBS Virtual Camera. 1080p or more works best.
-- The app installs for your Windows user and needs no admin rights.
+- Both setups install for your Windows user and need no admin rights.
 
 ## Install
 
@@ -103,19 +108,24 @@ button. Check the SHA-256 first.
 
 1. Close OBS Studio.
 2. Run `KlarCam-OBS-Filter-Setup-0.2.0.exe`. It installs the filter to
-   `%ProgramData%\obs-studio\plugins\klarcam`.
+   `%ProgramData%\obs-studio\plugins\klarcam`, and nothing else: no app, no virtual
+   camera. OBS Studio must be installed.
 3. Start OBS and add the filter to your camera: [OBS quick start](docs/quick-start-obs.md).
+
+To move from the filter setup to the app later, uninstall **KlarCam OBS Filter**
+first, then install KlarCam: the app setup brings the filter along.
 
 ### Uninstall
 
-Windows Settings > Apps > Installed apps > KlarCam > Uninstall. Your settings and your
-license key in `%APPDATA%\KlarCam` stay, so a later install picks them up.
+Windows Settings > Apps > Installed apps, then **KlarCam** (the app setup) or
+**KlarCam OBS Filter** (the filter setup) > Uninstall. Your settings and your license
+key in `%APPDATA%\KlarCam` stay, so a later install picks them up.
 
 ## Trial and license
 
-- **Trial:** everything works for 14 days from the first start. The trial runs once
-  per computer; a new major version does not restart it. After that, the camera
-  picture passes through unchanged until you enter a key.
+- **Trial:** everything works for 14 days from the first start. The trial runs once:
+  reinstalling, updating, a new major version or removing a key do not restart it.
+  After that, the camera picture passes through unchanged until you enter a key.
 - **Buy:** a one-time purchase at [klarcam.com](https://klarcam.com), €49, VAT
   included where applicable. No subscription. Payment runs through Stripe; the
   seller is Stripe's merchant of record "Sold through Link".

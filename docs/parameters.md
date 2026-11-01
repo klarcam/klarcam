@@ -170,7 +170,7 @@ camera keeps its sharpness at 2x.
 |---|---|---|---|
 | **Smoothing** | 0 to 1 | 0.60 | Evens out the skin: flat areas blend toward their surroundings while edges stay, because the strength follows the local detail. Acts on the face skin only; eyes, brows and lips are left out. |
 | **Sharpen (edges)** | 0 to 1 | 0.25 | Sharpens the face's edges (eyes, brows, lips, contours) and leaves flat skin and pores alone. |
-| **Smoothing radius (px)** | 1 to 16 | 4 | The size, in pixels of the camera frame, of the area the smoothing evens out toward. |
+| **Smoothing radius (px)** | 1 to 16 | 4 | The radius of the blur the smoothing evens out toward, in pixels of the processed frame. |
 | **Skin tone detection** | 0 to 1 | 0.80 | How strictly the smoothing keeps to skin-colored pixels inside the face. 0 ignores the color and smooths the whole face area; 1 smooths only what looks like skin. |
 | **Detect the beard automatically** | on / off | on | Compares the texture of the lower face with that of the cheeks: stubble is dense texture, bare skin is not. The line below shows "Beard detected: N %". The Beard slider is then the strength for what is detected. |
 | **Beard (keep stubble)** | 0 to 1 | 1.00 | Keeps the lower face (upper lip, chin, jaw, the cheeks below the cheek line) out of the smoothing and out of the skin statistics, so a beard or stubble keeps its texture. Tone correction, key light and LUTs still cover the whole face. |
@@ -183,8 +183,9 @@ camera keeps its sharpness at 2x.
 - **Sharpen (edges):** a webcam already sharpens in the camera, so 0.2 to 0.3 is
   plenty there. With a beard, high values make the stubble look crisper; the
   smoothing itself leaves stubble alone.
-- **Smoothing radius (px):** both presets keep 4. The radius counts camera pixels, so
-  the same value covers a smaller part of the face at 4K than at 1080p.
+- **Smoothing radius (px):** both presets keep 4. The radius counts pixels, so the
+  same value covers less of the face at 4K than at 1080p, and less when the face is
+  larger in the frame (Auto frame zooms the face up).
 - **Skin tone detection:** the smoothing stays inside the face either way; this
   setting decides how much the skin color matters within it.
 - **Beard:** check what is kept out with **Debug view > Show smoothing mask**. Without
@@ -225,7 +226,7 @@ band around the skin tone line in the upper left quadrant. **Skin band from** an
 | Control | Range | Default | What it changes |
 |---|---|---|---|
 | **Eye sharpen** | 0 to 1 | 0 | Adds sharpness inside the eye area: lids, lashes, iris. |
-| **Eye zone** | 1.0 to 1.6 | 1.20 | How far Eye sharpen and Eye brightening reach beyond the lid line. 1.05 = lids and lashes only, the skin around the eyes stays calm; 1.4 = a crisp ring around the eyes ("soft face, sharp eyes"). The smoothing stops at 1.4 either way. |
+| **Eye zone** | 1.0 to 1.6 | 1.20 | How far Eye sharpen and Eye brightening reach beyond the lid line. 1.05 = lids and lashes only, the skin around the eyes stays calm; 1.4 = a crisp ring around the eyes ("soft face, sharp eyes"). |
 | **Remove eye reflections** | 0 to 1 | 0 | Removes catchlights, the reflections of a lamp in the eyes: near-white spots are pulled to the brightness around them. |
 | **Eye brightening (whites)** | 0 to 1 | 0 | Brightens the whites of the eyes (bright, low-color pixels inside the eye area; skin is excluded). |
 | **Teeth whitening** | 0 to 1 | 0 | Takes the yellow out of the bright teeth pixels inside the lips and lifts them a little. It acts gently at low values and grows faster toward 1. |
@@ -244,13 +245,13 @@ your head; your body gets neither light nor shadow from it.
 | Control | Range | Default | What it changes |
 |---|---|---|---|
 | **Key light strength** | 0 to 1 | 0 | Strength of the key light. 0 = off. |
-| **Light direction** | -1 to +1 | 0.60 | Left (-) to right (+). With **Follow the room's light (side)** on, only how far to the side the light comes from; the side itself is measured. |
+| **Light direction** | -1 to +1 | 0.60 | Left (-) to right (+) in the camera's own, unmirrored picture. With **Follow the room's light (side)** on, only how far to the side the light comes from; the side itself is measured. |
 | **Follow the room's light (side)** | on / off | on | Puts the key light on the side your room's light comes from. Measured on your face once (a few seconds), then locked, so it never changes sides during a stream. The locked side is saved with the scene collection. Off: the sign of Light direction is the side. |
 | **Measure again** | button | | Measures the room's light anew over a few seconds, for example after you moved a lamp or the desk. The light swings over to the result once and stays there. |
 | **Swap side** | button | | Puts the light on the other side if you like that better. Stays until you measure again or switch the automatic off. |
 | **Light height** | 0 to 1 | 0.40 | From the side (0) to above (1). |
 | **Spread (beyond the face)** | 1.0 to 2.5 | 1.50 | How far the light reaches beyond the face, over the rest of the head. |
-| **Edge tightness** | 0 to 1 | 0.50 | How tightly the light is cut to your silhouette. |
+| **Edge tightness** | 0 to 1 | 0.50 | How tightly the light is cut to your silhouette. Higher values cut it more sharply at the edge; lower values let it fade out into the background. |
 
 While **Follow the room's light (side)** is on, a status line with the two buttons
 below it shows "Room light: measuring", "from the left, locked", "from the right,
@@ -264,6 +265,9 @@ locked" or "frontal, locked (the slider's sign is the side)".
   side, click **Swap side**.
 - When the room's light is measured as frontal, the sign of **Light direction**
   decides the side.
+- Left and right refer to the camera's own picture, which is what the filter
+  receives. A horizontal flip on the source in OBS, or a mirrored self-view in a call
+  app, shows them swapped on your screen; the picture others receive is not mirrored.
 
 ## Color LUTs
 
@@ -275,7 +279,7 @@ locked" or "frontal, locked (the slider's sign is the side)".
 | **Custom LUT file (.cube)** | file | none | Your own 3D LUT in `.cube` format. |
 | **Custom LUT** | 0 to 1 | 0 | Strength of your own LUT. |
 | **Applies to** (one per LUT) | Face skin, Person (face, neck, hair), Whole frame | Person for the red and yellow LUTs, Whole frame for Contrast look and Custom LUT | **Face skin:** the face mask, eyes, brows and lips excluded. **Person:** your silhouette from the person detection, the face always included. **Whole frame:** like an OBS LUT filter. |
-| **Film look (grade)** | 0 to 1 | 0 | A filmic grade: S-curve, lifted blacks, teal and orange split. |
+| **Film look (grade)** | 0 to 1 | 0 | A filmic grade: lifted blacks, a gentle S-curve, teal shadows and warm highlights. |
 
 **Good to know.**
 
@@ -340,11 +344,12 @@ The debug views:
 
 Below the list, two status lines:
 
-- **Face tracker:** for example `ONNX Runtime 1.x (DirectML on <your GPU>) ready,
-  pipelined`, or the reason it is not running.
-- **Pipeline:** `CPU ... ms, GPU ... ms per frame`, the GPU time of each processing
-  step and the face tracker's timing. They appear after about 120 frames. OBS's log
-  carries the same lines.
+- **Face tracker:** for example `ONNX Runtime 1.24.4 (DirectML on NVIDIA GeForce RTX
+  5060 Ti) ready, pipelined`, or the reason it is not running.
+- **Pipeline:** `CPU ... ms, GPU ... ms per frame`, followed by one line with the GPU
+  time of each processing step and the face tracker's timing: `GPU passes (ms): frame
+  0.02, mask 0.02, ... Tracker: models ... ms, wait ... ms, older results ... %`. They
+  appear after about 120 frames. OBS's log carries the same lines.
 
 Debug views are part of the output: set **Debug view** back to **Off** before you go
 live.
@@ -454,7 +459,7 @@ updates live.
 | **Activate** | | Stores the key pasted into the field (KLARCAM-...). |
 | **Buy a key (klarcam.com)** | | Opens the shop. |
 | **Remove key** | | Deletes the stored key. The trial does not start again. |
-| **Reset all sliders to the defaults** | | Back to the app's defaults: the Stream look, Auto frame off, the room's light measured anew, the vectorscope as overlay. |
+| **Reset all sliders to the defaults** | | Back to the app's defaults: the Stream look, Beard 1.00 with Detect the beard automatically on, the vectorscope on as an overlay (face skin only, skin quadrant, 2x), Auto frame off with Face height 0.41, A/B and the debug view off. Unlike the Look buttons, it also releases the room-light lock, so the side is measured anew. |
 | **Hide to tray on close** | on | Closing the window hides KlarCam to the tray and the camera keeps running. Quit from the tray icon's menu with **Quit KlarCam**. |
 | **Start hidden** | off | KlarCam starts in the tray, without its window. |
 | **Start with Windows** | off | Starts KlarCam hidden in the tray when you sign in to Windows. |

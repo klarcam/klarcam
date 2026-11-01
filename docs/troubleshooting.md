@@ -6,7 +6,7 @@ Never post your license key or your e-mail address in an issue.
 
 Contents:
 [The picture passes through unchanged](#the-picture-passes-through-unchanged) ·
-[No Direct3D 11 GPU](#no-direct3d-11-gpu-core-unavailable) ·
+[GPU not supported](#the-graphics-card-is-not-supported-or-not-found) ·
 [KlarCam is missing in OBS](#klarcam-is-missing-from-the-obs-filter-list) ·
 [Virtual camera not listed](#the-virtual-camera-klarcam-is-not-listed) ·
 [Trial over](#trial-over) ·
@@ -28,12 +28,15 @@ Check these in order:
 3. **No face is found.** Most of KlarCam acts on the face. The app's Status shows
    "Face: tracked" or "Face: not found". Face the camera with your face lit; check
    the tracking with **Debug view > Show face landmarks**.
-4. **The processing could not start.** See the next section.
+4. **The processing or the face tracking could not start.** See the next section.
 
-## No Direct3D 11 GPU (core unavailable)
+## The graphics card is not supported or not found
 
-KlarCam runs on the graphics card through Direct3D 11. Without it, the picture passes
-through unchanged.
+KlarCam needs two things from the graphics card: Direct3D 11 to process the picture,
+and Direct3D 12 for the face tracking, which runs on DirectML.
+
+**Direct3D 11: the processing does not start.** The picture passes through
+unchanged.
 
 - **App:** the Status section shows "Core unavailable: <reason>" in red.
 - **OBS:** the filter's Diagnostics group shows "Face tracker: core unavailable (see
@@ -41,31 +44,44 @@ through unchanged.
   `[KlarCam]`, for example
   `[KlarCam] no Direct3D 11 device (OBS renderer is not D3D11), filter will pass through`
   or `[KlarCam] core initialization failed, filter will pass video through: <reason>`.
+- **What to do:** in OBS, **Settings > Advanced > Video > Renderer** must be
+  **Direct3D 11** (the default on Windows); restart OBS after changing it. Install the
+  current graphics driver from NVIDIA, AMD or Intel.
 
-What to do:
+**Direct3D 12: the face tracking does not start.** The tracker line (OBS: Diagnostics
+> **Face tracker**; app: Status > **Tracker**) does not end in "ready", and the log
+has a line such as `tracker: no Direct3D 12 device on <your GPU>`. There is no
+fallback without it, so nothing that needs the face works: smoothing, key light, skin
+tone, the person regions of the LUTs, the background exposure, auto frame.
 
-- **OBS renderer:** in OBS, **Settings > Advanced > Video > Renderer** must be
-  **Direct3D 11** (the default on Windows). Restart OBS after changing it.
-- **Graphics driver:** install the current driver from NVIDIA, AMD or Intel.
-- **Two GPUs (laptops):** in the app, **Status > GPU** chooses the graphics card;
-  **Automatic** takes the one with the most dedicated memory. The OBS filter runs on
-  the graphics card OBS itself uses.
-- If the face tracker reports an error, the Diagnostics line **Face tracker** (OBS)
-  or **Tracker** (app Status) names it. Copy it into a bug report.
+- **What to do:** install the current graphics driver from NVIDIA, AMD or Intel. To
+  check the card: press Win+R, type `dxdiag`, open the **Display** tab and look at
+  **DDI Version**. It reads 12 when the card and its driver support Direct3D 12; if
+  it stays below 12 after a driver update, the card is too old for KlarCam.
+- **Where the log is:** OBS: **Help > Log Files > View Current Log** (the lines start
+  with `[KlarCam]`). App: **Debug > Show log**, or `app.log` in `%APPDATA%\KlarCam`.
+
+**Two GPUs (laptops).** In the app, **Status > GPU** chooses the graphics card;
+**Automatic** takes the one with the most dedicated memory. The OBS filter runs on the
+graphics card OBS itself uses.
+
+If the tracker line reports another error, copy it into a bug report.
 
 ## KlarCam is missing from the OBS filter list
 
-1. **OBS version:** KlarCam needs OBS Studio 33 or newer. **Help > About** shows your
-   version; older versions do not load the filter. After updating OBS, KlarCam shows
-   up without a new install.
+1. **OBS version:** KlarCam is built for and tested with OBS Studio 33; older
+   versions are not supported. **Help > About** shows your version. Update OBS, then
+   run the KlarCam setup again.
 2. **The right list:** KlarCam is a video filter. Right-click the camera source >
    **Filters**, then click **+** under **Effect Filters** (not under Audio/Video
    Filters).
 3. **Installed while OBS was running?** Close OBS and run the setup again.
 4. **Files in place?** The folder `%ProgramData%\obs-studio\plugins\klarcam` must
-   exist and contain `klarcam.dll`. With the full setup, the filter is installed only
+   exist and contain `klarcam.dll`. With the app setup, the filter is installed only
    if **Install the OBS Studio filter** was ticked; the setup offers it only when OBS
-   is installed.
+   is installed. The filter setup does not install while the KlarCam app is
+   installed: the app setup includes the filter, so run it again and tick the OBS
+   option.
 5. **OBS's log:** **Help > Log Files > View Current Log**, search for `[KlarCam]`. The
    line `[KlarCam] plugin loaded, version 0.2.0` means OBS found the filter.
 
@@ -95,8 +111,8 @@ open the camera again. Switch the camera off and on in the call app, or restart 
 
 - Everything works for 14 days from the first start. After that, the camera picture
   passes through unchanged until a key is entered.
-- The trial runs once per computer. Neither reinstalling nor a new major version
-  restarts it.
+- The trial runs once. Reinstalling, updating, a new major version or removing a key
+  do not restart it.
 - Buy a key at [klarcam.com](https://klarcam.com). It appears on the page after the
   payment and arrives by e-mail.
 - Enter it in the app under **Status > License** (paste, **Activate**) or in the OBS
@@ -106,8 +122,8 @@ open the camera again. Switch the camera off and on in the call app, or restart 
 
 ## A key is rejected
 
-The app shows the reason in red under **Status > License**; the OBS filter shows it in
-brackets on the license line.
+The app shows the reason in red under **Status > License**; the OBS filter shows it on
+the license line above the **License key** field.
 
 | Message | What it means | What to do |
 |---|---|---|
@@ -158,13 +174,15 @@ issue.
 |---|---|
 | The app | `%LOCALAPPDATA%\Programs\KlarCam` |
 | The OBS filter | `%ProgramData%\obs-studio\plugins\klarcam` |
+| The filter setup's uninstaller | `%LOCALAPPDATA%\Programs\KlarCam OBS Filter` |
 | App settings, the app's log, your license key | `%APPDATA%\KlarCam` |
 | OBS filter settings | In your OBS scene collection, with the camera source |
 | Snapshots, recordings, diagnostics reports | `Pictures\KlarCam` |
 | Third-party license texts | `licenses` next to the app and next to the OBS filter |
 
-Uninstalling removes the app and the filter but keeps `%APPDATA%\KlarCam`, so your
-settings and your key survive a reinstall.
+Uninstalling (Windows Settings > Apps > Installed apps: **KlarCam** for the app setup,
+**KlarCam OBS Filter** for the filter setup) removes the program and the filter but
+keeps `%APPDATA%\KlarCam`, so your settings and your key survive a reinstall.
 
 ## Collecting the details for a report
 
