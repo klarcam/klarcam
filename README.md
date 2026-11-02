@@ -160,3 +160,9 @@ key in `%APPDATA%\KlarCam` stay, so a later install picks them up.
 This repository holds KlarCam's user documentation and installers and collects
 feedback. The source code is not public. KlarCam is proprietary software; see
 [LICENSE.md](LICENSE.md) and the [third-party notices](THIRD_PARTY_NOTICES.md).
+
+KlarCam is third-party software. It is not part of OBS Studio and is not made by,
+affiliated with or endorsed by the OBS Project; please report KlarCam problems here,
+not to OBS. Zoom, Microsoft Teams, Google Meet and the other programs named here
+appear only to say what KlarCam works with, and KlarCam is not affiliated with their
+makers either.
