@@ -1,15 +1,15 @@
 # KlarCam controls
 
-Every control of the OBS filter and of the KlarCam app: the name exactly as shown,
-what it changes in the picture, its range and default, when to touch it, and which
-controls work together.
+Every control of the KlarCam filter for OBS Studio and of the KlarCam app: the name
+exactly as shown, what it changes in the picture, its range and default, when to
+touch it, and which controls work together.
 
-The OBS filter and the app run the same processing, and most controls exist in both
-with the same name and range. This page follows the OBS filter's properties from top
-to bottom; [The KlarCam app](#the-klarcam-app) then lists what is different in the
+The filter and the app run the same processing, and most controls exist in both with
+the same name and range. This page follows the filter's properties in OBS from top to
+bottom; [The KlarCam app](#the-klarcam-app) then lists what is different in the
 app and what only the app has.
 
-**Default** in the tables is the value of a freshly added OBS filter. The app starts
+**Default** in the tables is the value of a filter freshly added in OBS. The app starts
 with the **Stream** look instead; the [Presets](#presets-natural-and-stream) table
 shows both looks.
 
@@ -105,7 +105,7 @@ set the exposure after.
 |---|---|---|---|
 | **A/B: show the original** | on / off | off | Sends the untouched camera frame to the output. The vectorscope and the measurement keep working on the processed frame, so you can compare. |
 | **Preset** | (keep the current values), Natural, Stream | (keep the current values) | Applies a look once, see [Presets](#presets-natural-and-stream). The list then returns to "(keep the current values)". |
-| **License key** | text | empty | Paste your key once. It is checked at once, stored for the OBS filter and the app, and the field is cleared. The field shows only while no key is stored. |
+| **License key** | text | empty | Paste your key once. It is checked at once, stored for the filter in OBS and the app, and the field is cleared. The field shows only while no key is stored. |
 
 The line above **License key** shows the license state:
 
@@ -399,9 +399,9 @@ is receiving the camera" or "No app is reading the camera right now".
 
 ### Framing, Exposure, Skin, Skin tone, Relight, Eyes and teeth
 
-The same controls as in the OBS filter, with these differences:
+The same controls as in OBS, with these differences:
 
-| OBS filter | App |
+| In OBS | App |
 |---|---|
 | Auto frame | **Auto frame (fill the frame with the face)** |
 | Face height (share of frame) | **Framing (face height)**. Changing it measures the frame anew. |
@@ -417,7 +417,7 @@ The Relight and Eyes and teeth sections start collapsed.
 
 ### Look
 
-The app's **Look** section holds what the OBS filter calls Color LUTs: **Film look
+The app's **Look** section holds what the filter in OBS calls Color LUTs: **Film look
 (grade)** first, then **Reduce red skin**, **Reduce yellow skin** and **Contrast look**,
 each with its own **applies to** list, then your own LUT: the file path, **Browse...**,
 **Clear**, and the **Custom** slider with its **applies to** list.
@@ -440,7 +440,7 @@ camera.
 
 The app measures while this section is open. It has the same **Set**, **Source**,
 **Wall sample**, **Wall gap (face widths)** and **Wall width (face widths)** as the
-OBS filter, plus **Show the zones in the preview** and **Copy report**. The report
+filter in OBS, plus **Show the zones in the preview** and **Copy report**. The report
 updates live.
 
 ### Debug
@@ -497,7 +497,7 @@ with a key shows in red above that line.
 - **Auto frame** comes first, so everything else works on the framed picture.
 - **A/B** changes only the output; the vectorscope and the measurement keep running
   on the processed frame.
-- **Vectorscope and debug views** are part of the OBS filter's output. In the app the
+- **Vectorscope and debug views** are part of the filter's output in OBS. In the app the
   vectorscope stays in the app, a debug view does not.
-- **One license key** unlocks the app and the OBS filter; it is stored once in
+- **One license key** unlocks the app and the filter in OBS; it is stored once in
   `%APPDATA%\KlarCam`.

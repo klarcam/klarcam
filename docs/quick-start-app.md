@@ -64,7 +64,7 @@ A look also sets Exposure and Background, so choose the look first.
 The **Status** section at the bottom of the panel shows the license under
 **License**: "Trial: 14 days left, everything works." Paste your key into the field
 and click **Activate**; **Buy a key (klarcam.com)** opens the shop. The key also
-unlocks the OBS filter.
+unlocks the filter in OBS.
 
 ## Next
 

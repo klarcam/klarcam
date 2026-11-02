@@ -1,5 +1,5 @@
 name: Bug report
-description: Something in the KlarCam app, the OBS filter or an installer does not work as described.
+description: Something in the KlarCam app, the filter in OBS or an installer does not work as described.
 labels: ["bug"]
 body:
   - type: markdown
@@ -14,7 +14,7 @@ body:
       label: Where does it happen?
       options:
         - KlarCam app or its virtual camera
-        - OBS filter
+        - The filter in OBS Studio
         - Both
         - Installer or uninstaller
     validations:
@@ -62,7 +62,7 @@ body:
     id: obs
     attributes:
       label: OBS Studio version
-      description: For the OBS filter. OBS > Help > About.
+      description: For the filter in OBS. OBS > Help > About.
       placeholder: "33.0.0"
   - type: input
     id: camera

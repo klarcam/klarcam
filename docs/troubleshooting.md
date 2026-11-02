@@ -7,7 +7,7 @@ Never post your license key or your e-mail address in an issue.
 Contents:
 [The picture passes through unchanged](#the-picture-passes-through-unchanged) ·
 [GPU not supported](#the-graphics-card-is-not-supported-or-not-found) ·
-[KlarCam is missing in OBS](#klarcam-is-missing-from-the-obs-filter-list) ·
+[KlarCam is missing in OBS](#klarcam-is-missing-from-the-filter-list-in-obs) ·
 [Virtual camera not listed](#the-virtual-camera-klarcam-is-not-listed) ·
 [Trial over](#trial-over) ·
 [Key rejected](#a-key-is-rejected) ·
@@ -20,7 +20,7 @@ Contents:
 Check these in order:
 
 1. **The trial is over and no key is stored.** The app's Status > License reads
-   "Trial over: the camera frame goes out until a key is entered."; the OBS filter's
+   "Trial over: the camera frame goes out until a key is entered."; in OBS, the filter's
    license line reads "Trial over: the filter passes the video through until a key is
    entered (klarcam.com)." See [Trial over](#trial-over).
 2. **A/B is on.** App: **Output** is set to **Original** (the **B** key switches). OBS:
@@ -62,12 +62,12 @@ tone, the person regions of the LUTs, the background exposure, auto frame.
   with `[KlarCam]`). App: **Debug > Show log**, or `app.log` in `%APPDATA%\KlarCam`.
 
 **Two GPUs (laptops).** In the app, **Status > GPU** chooses the graphics card;
-**Automatic** takes the one with the most dedicated memory. The OBS filter runs on the
-graphics card OBS itself uses.
+**Automatic** takes the one with the most dedicated memory. The filter in OBS runs on
+the graphics card OBS itself uses.
 
 If the tracker line reports another error, copy it into a bug report.
 
-## KlarCam is missing from the OBS filter list
+## KlarCam is missing from the filter list in OBS
 
 1. **OBS version:** KlarCam is built for and tested with OBS Studio 33; older
    versions are not supported. **Help > About** shows your version. Update OBS, then
@@ -115,15 +115,15 @@ open the camera again. Switch the camera off and on in the call app, or restart 
   do not restart it.
 - Buy a key at [klarcam.com](https://klarcam.com). It appears on the page after the
   payment and arrives by e-mail.
-- Enter it in the app under **Status > License** (paste, **Activate**) or in the OBS
-  filter's **License key** field. One key unlocks both.
+- Enter it in the app under **Status > License** (paste, **Activate**) or in the
+  filter's **License key** field in OBS. One key unlocks both.
 - Lost the key? [klarcam.com/key](https://klarcam.com/key) sends it again to the
   purchase e-mail.
 
 ## A key is rejected
 
-The app shows the reason in red under **Status > License**; the OBS filter shows it on
-the license line above the **License key** field.
+The app shows the reason in red under **Status > License**; the filter in OBS shows it
+on the license line above the **License key** field.
 
 | Message | What it means | What to do |
 |---|---|---|
@@ -173,12 +173,12 @@ issue.
 | What | Where |
 |---|---|
 | The app | `%LOCALAPPDATA%\Programs\KlarCam` |
-| The OBS filter | `%ProgramData%\obs-studio\plugins\klarcam` |
+| The filter for OBS Studio | `%ProgramData%\obs-studio\plugins\klarcam` |
 | The filter setup's uninstaller | `%LOCALAPPDATA%\Programs\KlarCam OBS Filter` |
 | App settings, the app's log, your license key | `%APPDATA%\KlarCam` |
-| OBS filter settings | In your OBS scene collection, with the camera source |
+| Filter settings in OBS | In your OBS scene collection, with the camera source |
 | Snapshots, recordings, diagnostics reports | `Pictures\KlarCam` |
-| Third-party license texts | `licenses` next to the app and next to the OBS filter |
+| Third-party license texts | `licenses` next to the app and next to the filter for OBS Studio |
 
 Uninstalling (Windows Settings > Apps > Installed apps: **KlarCam** for the app setup,
 **KlarCam OBS Filter** for the filter setup) removes the program and the filter but

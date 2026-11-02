@@ -12,7 +12,7 @@ body:
       label: Which part?
       options:
         - KlarCam app or its virtual camera
-        - OBS filter
+        - The filter in OBS Studio
         - Both
         - Documentation
         - Something else
