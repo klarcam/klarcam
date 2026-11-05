@@ -6,6 +6,18 @@ a `licenses` folder for the app, and in `%ProgramData%\obs-studio\plugins\klarca
 with a `licenses` folder for the filter in OBS. The same license texts are in the
 [licenses](licenses) folder of this repository.
 
+## KlarCam filter host for OBS Studio (GNU GPL v2 or later)
+
+Copyright (C) 2026 Lars von Thienen.
+
+`klarcam.dll`, the part of the filter that OBS Studio loads, is free software under the
+GNU General Public License, version 2 or (at your option) any later version. It hands
+each frame to the KlarCam engine (`engine\klarcam-engine.exe`), a separate program with
+its own license. Its source code is in [klarcam-host](klarcam-host) and, with each
+setup, in the filter's `licenses` folder as `klarcam-host-source-<version>.zip`; the
+protocol files in it are under the MIT license. License text:
+[licenses/klarcam-host-GPL-2.0.txt](licenses/klarcam-host-GPL-2.0.txt).
+
 ## GPUPixel (Apache License 2.0)
 
 Copyright (c) PixPark. https://github.com/pixpark/gpupixel
@@ -13,7 +25,7 @@ Copyright (c) PixPark. https://github.com/pixpark/gpupixel
 KlarCam's skin-smoothing math is a port to HLSL of GPUPixel's `BeautyFaceUnitFilter`,
 `BoxMonoBlurFilter` and `BoxDifferenceFilter` (mean and variance adaptive blend,
 box blur, high-pass sharpening). No GPUPixel source files are compiled into the app
-or the filter for OBS Studio. License text: [licenses/Apache-2.0.txt](licenses/Apache-2.0.txt).
+or the KlarCam engine. License text: [licenses/Apache-2.0.txt](licenses/Apache-2.0.txt).
 
 ## MediaPipe models (Apache License 2.0)
 
@@ -67,17 +79,6 @@ Compiled into the virtual camera `klarcam-vcam.dll`. License text:
 The LUTs "Reduce red skin" and "Reduce yellow skin" were created by Lars von Thienen
 in DaVinci Resolve and are part of KlarCam. The "Contrast look" LUT is generated from
 KlarCam's own look model. No third-party LUT data is included.
-
-## KlarCam filter host for OBS Studio (GNU GPL v2 or later)
-
-Copyright (C) 2026 Lars von Thienen.
-
-`klarcam.dll`, the part of the filter that OBS Studio loads, is free software under the
-GNU General Public License, version 2 or (at your option) any later version. It hands
-each frame to the KlarCam engine, a separate program. Its source code is in
-[klarcam-host](klarcam-host) and, with each setup, in the filter's `licenses` folder
-as `klarcam-host-source-<version>.zip`; the protocol files in it are under the MIT
-license. License text: [licenses/klarcam-host-GPL-2.0.txt](licenses/klarcam-host-GPL-2.0.txt).
 
 ## libobs (GNU GPL v2 or later)
 
