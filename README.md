@@ -52,7 +52,7 @@ The same frame, once straight from the camera and once through KlarCam.
 |---|---|---|
 | For | Zoom, Microsoft Teams, Google Meet in Chrome or Edge, and other apps that use a camera | Streaming and recording with OBS Studio |
 | How | The app reads your camera and sends the processed picture to the virtual camera **KlarCam**. Pick that camera in your call app. | Add the effect filter **KlarCam** to your camera source. |
-| Installer | `KlarCam-Setup-0.2.0.exe`, which can also install the filter for OBS Studio | `KlarCam-OBS-Filter-Setup-0.2.0.exe`, or the full setup |
+| Installer | `KlarCam-Setup-0.3.0.exe`, which can also install the filter for OBS Studio | `KlarCam-Filter-Setup-0.3.0.exe`, or the full setup |
 | Start here | [App quick start](docs/quick-start-app.md) | [OBS quick start](docs/quick-start-obs.md) |
 
 Both run the same processing with the same controls, and one license key covers
@@ -62,8 +62,8 @@ both.
 
 | File | Installs | Get it |
 |---|---|---|
-| `KlarCam-Setup-0.2.0.exe` (about 35 MB) | The app with the virtual camera, optionally the filter for OBS Studio | [GitHub release](https://github.com/klarcam/klarcam/releases/latest) or [klarcam.com](https://klarcam.com/download/KlarCam-Setup-0.2.0.exe) (the same file) |
-| `KlarCam-OBS-Filter-Setup-0.2.0.exe` (about 18 MB) | Only the filter for OBS Studio | [GitHub release](https://github.com/klarcam/klarcam/releases/latest) |
+| `KlarCam-Setup-0.3.0.exe` (about 35 MB) | The app with the virtual camera, optionally the filter for OBS Studio | [GitHub release](https://github.com/klarcam/klarcam/releases/latest) or [klarcam.com](https://klarcam.com/download/KlarCam-Setup-0.3.0.exe) (the same file) |
+| `KlarCam-Filter-Setup-0.3.0.exe` (about 19 MB) | Only the filter for OBS Studio | [GitHub release](https://github.com/klarcam/klarcam/releases/latest) |
 
 Install one of the two: the app setup already includes the filter for OBS Studio, and
 the filter setup does not install while the KlarCam app is installed.
@@ -72,7 +72,7 @@ The release notes list the SHA-256 of each file. To check a download, run this i
 PowerShell in your Downloads folder and compare the result:
 
 ```powershell
-Get-FileHash .\KlarCam-Setup-0.2.0.exe
+Get-FileHash .\KlarCam-Setup-0.3.0.exe
 ```
 
 The installers are not code-signed yet. Windows SmartScreen may therefore show
@@ -85,7 +85,8 @@ button. Check the SHA-256 first.
 - A graphics card with Direct3D 12: NVIDIA, AMD or Intel. KlarCam renders the
   picture with Direct3D 11 and runs the face tracking on DirectML, which needs
   Direct3D 12.
-- For the filter: OBS Studio 33 or newer.
+- For the filter: OBS Studio 33 or newer, with Direct3D 11 as its renderer (OBS's
+  default on Windows).
 - A camera Windows sees: a webcam, an HDMI capture card, or a software camera such
   as NVIDIA Broadcast or OBS Virtual Camera. 1080p or more works best.
 - Both setups install for your Windows user and need no admin rights.
@@ -94,10 +95,11 @@ button. Check the SHA-256 first.
 
 ### The app, with the virtual camera
 
-1. Run `KlarCam-Setup-0.2.0.exe`. It installs KlarCam for your Windows user in
+1. Run `KlarCam-Setup-0.3.0.exe`. It installs KlarCam for your Windows user in
    `%LOCALAPPDATA%\Programs\KlarCam`.
-2. If OBS Studio is installed, the setup offers **Install the OBS Studio filter (OBS
-   33 or newer; close OBS first)**. Close OBS before you go on.
+2. If OBS Studio is installed, the setup offers **Install the filter for OBS Studio
+   (OBS 33 or newer; close OBS first)**. Close OBS before you go on. With that box
+   ticked, the app setup also replaces a filter-only install (**KlarCam Filter**).
 3. Start KlarCam. It opens your camera (the one you used last, or the first one it
    finds) and registers the virtual camera **KlarCam** for your Windows user.
 4. In Zoom, Teams, Meet or any other app, choose the camera **KlarCam**. KlarCam has
@@ -107,19 +109,28 @@ button. Check the SHA-256 first.
 ### Only the filter for OBS Studio
 
 1. Close OBS Studio.
-2. Run `KlarCam-OBS-Filter-Setup-0.2.0.exe`. It installs the filter to
+2. Run `KlarCam-Filter-Setup-0.3.0.exe`. It installs the filter to
    `%ProgramData%\obs-studio\plugins\klarcam`, and nothing else: no app, no virtual
    camera. OBS Studio must be installed.
 3. Start OBS and add the filter to your camera: [OBS quick start](docs/quick-start-obs.md).
 
-To move from the filter setup to the app later, uninstall **KlarCam OBS Filter**
-first, then install KlarCam: the app setup brings the filter along.
+To move from the filter setup to the app later, run the app setup with the filter for
+OBS Studio ticked: it replaces **KlarCam Filter**. To go the other way, uninstall
+**KlarCam** first, then run the filter setup.
+
+### Update
+
+Close OBS and run the new setup of the kind you have: it installs over the old
+version. Your scenes keep their KlarCam filters and settings, and your key stays. In
+0.2.0 the filter setup was called **KlarCam OBS Filter**; from 0.3.0 on it is
+**KlarCam Filter**, and the update renames its entry in Windows' list of apps.
 
 ### Uninstall
 
 Windows Settings > Apps > Installed apps, then **KlarCam** (the app setup) or
-**KlarCam OBS Filter** (the filter setup) > Uninstall. Your settings and your license
-key in `%APPDATA%\KlarCam` stay, so a later install picks them up.
+**KlarCam Filter** (the filter setup, called **KlarCam OBS Filter** in 0.2.0) >
+Uninstall. Your settings and your license key in `%APPDATA%\KlarCam` stay, so a later
+install picks them up.
 
 ## Trial and license
 
@@ -158,8 +169,12 @@ key in `%APPDATA%\KlarCam` stay, so a later install picks them up.
 ## About this repository
 
 This repository holds KlarCam's user documentation and installers and collects
-feedback. The source code is not public. KlarCam is proprietary software; see
-[LICENSE.md](LICENSE.md) and the [third-party notices](THIRD_PARTY_NOTICES.md).
+feedback. It also holds, in [klarcam-host](klarcam-host), the source code of the
+filter host for OBS Studio (`klarcam.dll`): free software under the GNU General Public
+License, version 2 or later. The filter host hands each frame to the KlarCam engine,
+a separate program. The rest of KlarCam, the engine included, is proprietary
+software, and its source code is not public; see [LICENSE.md](LICENSE.md) and the
+[third-party notices](THIRD_PARTY_NOTICES.md).
 
 KlarCam is third-party software. It is not part of OBS Studio and is not made by,
 affiliated with or endorsed by the OBS Project; please report KlarCam problems here,

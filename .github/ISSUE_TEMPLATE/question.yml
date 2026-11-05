@@ -22,7 +22,7 @@ body:
     id: versions
     attributes:
       label: KlarCam version, and OBS version if it is about the filter
-      placeholder: "KlarCam 0.2.0, OBS 33.0.0"
+      placeholder: "KlarCam 0.3.0, OBS 33.0.0"
   - type: checkboxes
     id: privacy
     attributes:

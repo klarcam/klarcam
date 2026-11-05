@@ -6,9 +6,9 @@ detail in the [parameter reference](parameters.md).
 ## 1. Install
 
 1. Close OBS Studio.
-2. Run `KlarCam-OBS-Filter-Setup-0.2.0.exe` (installs only the filter), or
-   `KlarCam-Setup-0.2.0.exe` with **Install the OBS Studio filter** ticked if you also
-   want the app with its virtual camera.
+2. Run `KlarCam-Filter-Setup-0.3.0.exe` (installs only the filter), or
+   `KlarCam-Setup-0.3.0.exe` with **Install the filter for OBS Studio** ticked if you
+   also want the app with its virtual camera.
 3. KlarCam needs OBS Studio 33 or newer. **Help > About** in OBS shows your version.
 
 Use one of the two setups: the app setup already includes the filter, and the filter
@@ -22,6 +22,11 @@ setup does not install while the KlarCam app is installed. The filter goes to
    Capture Device**) and choose **Filters**.
 3. Under **Effect Filters**, click **+**, choose **KlarCam** and confirm the name.
 
+For a second or two the video passes through unfiltered while the KlarCam engine
+starts, then the look fades in. The same happens each time OBS starts. Once the engine
+runs, the first line of the filter's **Diagnostics** group reads "KlarCam engine:
+running on" and the name of your graphics card.
+
 The filter's settings belong to this source and are saved with your scene
 collection. To use the same settings on another source, right-click the source and
 use **Copy Filters**, then **Paste Filters** on the other source.
@@ -32,6 +37,9 @@ At the top of the filter's properties, a line shows the license state:
 
 - `Trial: 14 days left, then the filter passes the video through. One-time purchase at klarcam.com`
 - `Licensed to <your e-mail> (KlarCam 1.x)` once a key is stored
+
+While the engine is still starting, the line shows the engine's state instead; close
+and reopen the properties a moment later.
 
 To enter a key, paste it into **License key**. The line changes to "Licensed to ..."
 and the field disappears. A key entered in the KlarCam app works in OBS as well

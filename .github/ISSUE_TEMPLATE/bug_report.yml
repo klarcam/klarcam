@@ -39,7 +39,7 @@ body:
     attributes:
       label: KlarCam version
       description: Windows Settings > Apps > Installed apps, or the OBS log line "[KlarCam] plugin loaded, version ...".
-      placeholder: "0.2.0"
+      placeholder: "0.3.0"
     validations:
       required: true
   - type: input
@@ -76,7 +76,7 @@ body:
       label: Status lines
       description: |
         App: the lines of the Status section (Running on, Tracker, Pipeline, Face, Loop), or better the text of Status > Save diagnostics (the file is in Pictures\KlarCam; you may remove the computer name and your Windows user name).
-        OBS: the filter's Diagnostics group (Face tracker, Pipeline) and the lines starting with [KlarCam] from Help > Log Files > View Current Log.
+        OBS: the filter's Diagnostics group (KlarCam engine, Face tracker, Pipeline) and the lines starting with [KlarCam] from Help > Log Files > View Current Log.
         Leave out the license line's e-mail address.
       render: text
     validations:

@@ -68,14 +68,26 @@ The LUTs "Reduce red skin" and "Reduce yellow skin" were created by Lars von Thi
 in DaVinci Resolve and are part of KlarCam. The "Contrast look" LUT is generated from
 KlarCam's own look model. No third-party LUT data is included.
 
-## libobs (GNU GPL v2)
+## KlarCam filter host for OBS Studio (GNU GPL v2 or later)
+
+Copyright (C) 2026 Lars von Thienen.
+
+`klarcam.dll`, the part of the filter that OBS Studio loads, is free software under the
+GNU General Public License, version 2 or (at your option) any later version. It hands
+each frame to the KlarCam engine, a separate program. Its source code is in
+[klarcam-host](klarcam-host) and, with each setup, in the filter's `licenses` folder
+as `klarcam-host-source-<version>.zip`; the protocol files in it are under the MIT
+license. License text: [licenses/klarcam-host-GPL-2.0.txt](licenses/klarcam-host-GPL-2.0.txt).
+
+## libobs (GNU GPL v2 or later)
 
 Copyright (c) Lain Bailey and the OBS Project. https://github.com/obsproject/obs-studio
 
-KlarCam's filter is loaded by OBS Studio at run time and is compiled against the
-public libobs headers. No libobs source is redistributed with it.
+The filter host `klarcam.dll` is loaded by OBS Studio at run time and is built
+against the public libobs headers. No libobs source is redistributed with it. The
+KlarCam engine does not use libobs.
 
 ## w32-pthreads (GNU LGPL v2.1)
 
 Headers used at compile time only, as required by the libobs public headers. No
-w32-pthreads code is linked into or redistributed with KlarCam's filter.
+w32-pthreads code is linked into or redistributed with the filter host.

@@ -105,7 +105,7 @@ set the exposure after.
 |---|---|---|---|
 | **A/B: show the original** | on / off | off | Sends the untouched camera frame to the output. The vectorscope and the measurement keep working on the processed frame, so you can compare. |
 | **Preset** | (keep the current values), Natural, Stream | (keep the current values) | Applies a look once, see [Presets](#presets-natural-and-stream). The list then returns to "(keep the current values)". |
-| **License key** | text | empty | Paste your key once. It is checked at once, stored for the filter in OBS and the app, and the field is cleared. The field shows only while no key is stored. |
+| **License key** | text | empty | Paste your key once. It is checked as soon as the KlarCam engine runs, stored for the filter in OBS and the app, and the field is cleared. The field shows only while no key is stored. |
 
 The line above **License key** shows the license state:
 
@@ -113,7 +113,8 @@ The line above **License key** shows the license state:
 - `Trial over: the filter passes the video through until a key is entered (klarcam.com).`
 - `Licensed to <e-mail> (KlarCam 1.x)`
 
-A rejected key shows its reason on that line; the reasons are listed in
+While the KlarCam engine is still starting, the line shows the engine's state instead,
+as in [Diagnostics](#diagnostics). A rejected key shows its reason on that line; the reasons are listed in
 [Troubleshooting](troubleshooting.md#a-key-is-rejected).
 
 ## Framing
@@ -132,7 +133,7 @@ see this line and the **Reframe** button.
 picture. KlarCam measures the face over about a second, locks the crop and eases it
 in over about a second. It never follows your head. It measures again by itself only
 after you have sat outside the middle of the frame, or much closer or farther, for
-about two seconds. After changing **Face height**, click **Reframe**.
+about two seconds, and when you change **Face height**.
 
 **Good to know.** The crop happens first, so the face tracking, the person mask and
 everything after them work on the framed picture; the person mask even gets finer.
@@ -250,7 +251,7 @@ your head; your body gets neither light nor shadow from it.
 | **Measure again** | button | | Measures the room's light anew over a few seconds, for example after you moved a lamp or the desk. The light swings over to the result once and stays there. |
 | **Swap side** | button | | Puts the light on the other side if you like that better. Stays until you measure again or switch the automatic off. |
 | **Light height** | 0 to 1 | 0.40 | From the side (0) to above (1). |
-| **Spread (beyond the face)** | 1.0 to 2.5 | 1.50 | How far the light reaches beyond the face, over the rest of the head. |
+| **Spread (beyond the face)** | 1.0 to 2.5 | 1.50 | How far the light reaches beyond the face, over the rest of the head. At 1.0 the shading ends at the face and leaves the ears out; higher values reach the ears, and also toward the collar. |
 | **Edge tightness** | 0 to 1 | 0.50 | How tightly the light is cut to your silhouette. Higher values cut it more sharply at the edge; lower values let it fade out into the background. |
 
 While **Follow the room's light (side)** is on, a status line with the two buttons
@@ -323,7 +324,8 @@ levels are p50 and p90, clipping counts Y >= 250, stops use gamma 2.2.
 The report lists each value with the set's band and an OK mark, then the one control
 to change next. For a valid reading: face the camera, mouth closed, monitor dark, and
 the wall box on bare wall (no shelf, panel or plant). **Debug view > Show measurement
-zones** shows where the zones are.
+zones** shows where the zones are. Until the first report is ready, it reads "Waiting
+for the first measured frame (refresh in a moment)."
 
 ## Diagnostics
 
@@ -342,8 +344,13 @@ The debug views:
 - **Show face normals (relight geometry):** the 3D shape the key light uses.
 - **Show measurement zones:** the measurement's zones over the dimmed picture.
 
-Below the list, two status lines:
+Below the list, the status lines:
 
+- **KlarCam engine:** `running on` and your graphics card; `starting`, after a failure
+  with the reason in brackets; `stopped:` and the reason; or `not available (OBS does
+  not render with Direct3D 11)`. When the processing cannot start in the engine, a red
+  line below it gives the reason. What each state means:
+  [Troubleshooting](troubleshooting.md#the-klarcam-engine-filter-in-obs).
 - **Face tracker:** for example `ONNX Runtime 1.24.4 (DirectML on NVIDIA GeForce RTX
   5060 Ti) ready, pipelined`, or the reason it is not running.
 - **Pipeline:** `CPU ... ms, GPU ... ms per frame`, followed by one line with the GPU
