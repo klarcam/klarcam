@@ -152,7 +152,7 @@ and the key light. Until 0.3.0 these were two groups, Exposure and Relight.
 | **Exposure (EV)** | -2 to +2 EV | 0 | Brightness of the whole frame, first in the chain, like ISO or exposure compensation on a camera. Applied as gain in linear light with a soft shoulder: highlights roll into white instead of clipping hard. Hidden while the automatic runs. |
 | **Automatic: hold the face level** | on / off | off | Exposes the whole frame so that your face skin holds the target. It starts from the Exposure value, so nothing changes when you switch it on, and ignores the slider from then on. Slow near the target (about two seconds), faster while far off (a lamp switched on), frozen without a face and while your head moves fast. Measured on the processed output, so LUTs and the film look are included. Switched off, it hands the level it reached back to the Exposure slider, so nothing jumps. The level is also saved with the settings, so after a restart the automatic continues from there. |
 | **Face target p90 (IRE)** | 50 to 80 | 67 | The face level the automatic holds: the level 90 % of your face skin stays below, in IRE (0 = black, 100 = white). Shown while the automatic is on. |
-| **Face light (EV)** | 0 to 1.5 EV | 0 | A soft light on your face that fades out with the distance from it: full on the face, less on the neck and the shoulders, none from the reach on. Like a lamp close to your face. It uses no mask, so it draws no edge along your silhouette. With the automatic on, your face stays at its target and the face light darkens everything else relative to it. |
+| **Face light (EV)** | 0 to 1.5 EV | 0 | A soft light on your face that fades out with the distance from it: full on the face, less on the neck and the shoulders, none from the reach on. Like a lamp close to your face. It uses no mask, so it draws no edge along your silhouette. With the automatic on, your face stays at its target and the face light darkens everything else relative to it. While no face is tracked, the light stays where your face was last seen. |
 | **Face light reach (face widths)** | 1.2 to 3 | 2.00 | Where the face light has faded out, in face widths from the face's center: 1.2 the head alone, 2 down to the collar, 3 the shoulders too. |
 | **Background vs. you (EV)** | -1.5 to +1.5 EV | 0 | Everything outside your silhouette, relative to you. Negative darkens the room and separates you from the wall; positive lifts the wall, and its noise with it. Called **Background (EV)** before 0.3.0. |
 | **Background falloff** | 0 to 1 | 0 | 0: the same Background vs. you value everywhere outside you. 1: none right next to your head, growing to the full value about two face widths away, like a vignette. |
@@ -187,8 +187,9 @@ locked" or "frontal, locked (the slider's sign is the side)".
   automatics work against each other. In Teams, also switch off "Adjust brightness".
 - **The automatic and Exposure:** while the automatic runs, the Exposure slider is
   hidden and has no effect, and your face goes to the target shown. Until 0.3.0 the
-  slider shifted the target, so a value left on it held the face below the target
-  shown; such a scene now reaches its target over a few seconds after the start.
+  slider shifted the target, so a value left on it held the face away from the target
+  shown (below it for a negative value, above it for a positive one); such a scene now
+  reaches its target over a few seconds after the start.
 - **Face target:** the default of 67 IRE sits in the band of the measurement's set N
   (65 to 68).
 - **Face light, Background vs. you or the key light?** The face light brightens your
@@ -391,7 +392,7 @@ different and what only the app has.
 | **Look: Natural / Stream** | Applies a built-in look, see [Presets](#presets-natural-and-stream). |
 | **1 / 2 / 3** | Your own looks. Grayed out while a slot is empty. |
 | **Save...** | Saves the current settings as Look 1, 2 or 3, replacing what is there. |
-| **Match set N** (named after the chosen set) / **Stop** | For the measurement protocol: a few seconds of small steps on Exposure (face p90), Background vs. you (wall p50, keeping the distance between face and wall), Key light strength (key to shadow cheek ratio) and Pull to skin line (skin hue), from the live measurement of the output, until everything sits in the set's bands. Then it says what it could not reach. Choose the set in the Measurement section and put the wall box on bare wall first. |
+| **Match set N** (named after the chosen set) / **Stop** | For the measurement protocol: a few seconds of small steps on Exposure (face p90; with the automatic on, Face target is set to the set's middle instead), Background vs. you (wall p50, keeping the distance between face and wall), Key light strength (key to shadow cheek ratio) and Pull to skin line (skin hue), from the live measurement of the output, until everything sits in the set's bands. Then it says what it could not reach. Choose the set in the Measurement section and put the wall box on bare wall first. |
 
 Like a preset in OBS, a look leaves the beard settings, Framing, the measured
 room-light side, A/B, the vectorscope and the measurement as they are.
