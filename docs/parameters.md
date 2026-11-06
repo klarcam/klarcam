@@ -145,7 +145,7 @@ camera keeps its sharpness at 2x.
 
 Every control that sets a level, in the order the chain applies them: the exposure of
 the whole frame and its automatic, the face light, the background relative to you,
-and the key light. Until 0.4.0 these were two groups, Exposure and Relight.
+and the key light.
 
 | Control | Range | Default | What it changes |
 |---|---|---|---|
@@ -154,7 +154,7 @@ and the key light. Until 0.4.0 these were two groups, Exposure and Relight.
 | **Face target p90 (IRE)** | 50 to 80 | 67 | The face level the automatic holds: the level 90 % of your face skin stays below, in IRE (0 = black, 100 = white). Shown while the automatic is on. |
 | **Face light (EV)** | 0 to 1.5 EV | 0 | A soft light on your face that fades out with the distance from it: full on the face, less on the neck and the shoulders, none from the reach on. Like a lamp close to your face. It uses no mask, so it draws no edge along your silhouette. With the automatic on, your face stays at its target and the face light darkens everything else relative to it. While no face is tracked, the light stays where your face was last seen. |
 | **Face light reach (face widths)** | 1.2 to 3 | 2.00 | Where the face light has faded out, in face widths from the face's center: 1.2 the head alone, 2 down to the collar, 3 the shoulders too. |
-| **Background vs. you (EV)** | -1.5 to +1.5 EV | 0 | Everything outside your silhouette, relative to you. Negative darkens the room and separates you from the wall; positive lifts the wall, and its noise with it. Called **Background (EV)** before 0.4.0. |
+| **Background vs. you (EV)** | -1.5 to +1.5 EV | 0 | Everything outside your silhouette, relative to you. Negative darkens the room and separates you from the wall; positive lifts the wall, and its noise with it. |
 | **Background falloff** | 0 to 1 | 0 | 0: the same Background vs. you value everywhere outside you. 1: none right next to your head, growing to the full value about two face widths away, like a vignette. |
 
 ### Key light
@@ -186,10 +186,7 @@ locked" or "frontal, locked (the slider's sign is the side)".
   fixed trim. KlarCam's automatic is meant for a camera with a fixed exposure. Two
   automatics work against each other. In Teams, also switch off "Adjust brightness".
 - **The automatic and Exposure:** while the automatic runs, the Exposure slider is
-  hidden and has no effect, and your face goes to the target shown. Until 0.4.0 the
-  slider shifted the target, so a value left on it held the face away from the target
-  shown (below it for a negative value, above it for a positive one); such a scene now
-  reaches its target over a few seconds after the start.
+  hidden and has no effect, and your face goes to the target shown.
 - **Face target:** the default of 67 IRE sits in the band of the measurement's set N
   (65 to 68).
 - **Face light, Background vs. you or the key light?** The face light brightens your
