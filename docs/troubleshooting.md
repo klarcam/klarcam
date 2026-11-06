@@ -92,7 +92,7 @@ If the tracker line reports another error, copy it into a bug report.
 
 ## The KlarCam engine (filter in OBS)
 
-Since 0.4.0 the filter in OBS has two parts. OBS loads `klarcam.dll`, which hands each
+The filter in OBS has two parts. OBS loads `klarcam.dll`, which hands each
 frame to the KlarCam engine, `klarcam-engine.exe` in the plugin folder's `engine`
 folder. The engine processes the frame and gives it back within the same OBS frame.
 It starts with the first KlarCam filter and ends with OBS, also when OBS crashes;
@@ -220,7 +220,7 @@ issue.
 |---|---|
 | The app | `%LOCALAPPDATA%\Programs\KlarCam` |
 | The filter for OBS Studio | `%ProgramData%\obs-studio\plugins\klarcam`, the KlarCam engine in its `engine` folder |
-| The filter setup's uninstaller | `%LOCALAPPDATA%\Programs\KlarCam Filter` (`KlarCam OBS Filter` for an install that began with 0.2.0) |
+| The filter setup's uninstaller | `%LOCALAPPDATA%\Programs\KlarCam Filter` |
 | App settings, the app's log, your license key | `%APPDATA%\KlarCam` |
 | Filter settings in OBS | In your OBS scene collection, with the camera source |
 | Snapshots, recordings, diagnostics reports | `Pictures\KlarCam` |
@@ -228,9 +228,8 @@ issue.
 | The filter host's license and source | In the filter's `licenses` folder: `klarcam-host-GPL-2.0.txt`, `klarcam-host-SOURCE.txt` and the source as a zip |
 
 Uninstalling (Windows Settings > Apps > Installed apps: **KlarCam** for the app setup,
-**KlarCam Filter** for the filter setup, **KlarCam OBS Filter** in 0.2.0) removes the
-program and the filter but keeps `%APPDATA%\KlarCam`, so your settings and your key
-survive a reinstall.
+**KlarCam Filter** for the filter setup) removes the program and the filter but keeps
+`%APPDATA%\KlarCam`, so your settings and your key survive a reinstall.
 
 ## Collecting the details for a report
 

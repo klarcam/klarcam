@@ -121,16 +121,13 @@ OBS Studio ticked: it replaces **KlarCam Filter**. To go the other way, uninstal
 ### Update
 
 Close OBS and run the new setup of the kind you have: it installs over the old
-version. Your scenes keep their KlarCam filters and settings, and your key stays. In
-0.2.0 the filter setup was called **KlarCam OBS Filter**; from 0.4.0 on it is
-**KlarCam Filter**, and the update renames its entry in Windows' list of apps.
+version. Your scenes keep their KlarCam filters and settings, and your key stays.
 
 ### Uninstall
 
 Windows Settings > Apps > Installed apps, then **KlarCam** (the app setup) or
-**KlarCam Filter** (the filter setup, called **KlarCam OBS Filter** in 0.2.0) >
-Uninstall. Your settings and your license key in `%APPDATA%\KlarCam` stay, so a later
-install picks them up.
+**KlarCam Filter** (the filter setup) > Uninstall. Your settings and your license key
+in `%APPDATA%\KlarCam` stay, so a later install picks them up.
 
 ## Trial and license
 
