@@ -30,8 +30,8 @@ The same frame, once straight from the camera and once through KlarCam.
   side your room's light comes from, measured once and then locked, so it never
   jumps sides during a stream.
 - **Exposure.** Exposure for the whole frame, an optional automatic that holds your
-  face at a target level, and the background (everything outside you) on its own
-  slider.
+  face at a target level, a soft face light like a lamp close to your face, and the
+  background (everything outside you) on its own slider.
 - **Skin tone.** Corrections on a Rec.709 vectorscope with the skin tone line as the
   reference: outliers move toward the line, the natural spread stays.
 - **Eyes and teeth.** Sharper eyes, brighter eye whites, catchlight removal, teeth

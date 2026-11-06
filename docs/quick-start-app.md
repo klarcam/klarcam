@@ -43,18 +43,21 @@ The bar at the top of the panel:
 - **Save...** stores the current settings in slot 1, 2 or 3; the numbered buttons
   bring them back.
 
-A look also sets Exposure and Background, so choose the look first.
+A look also sets Exposure, Face light and Background vs. you, so choose the look first.
 
 ## 5. Fine-tune
 
 - **Skin > Smoothing:** until the skin looks calm while the face keeps its shape.
   With a webcam, **Sharpen (edges)** at 0.2 to 0.3 is plenty: webcams already sharpen
   in the camera.
-- **Exposure:** use **Exposure (EV)** like the exposure compensation on a camera.
+- **Lighting > Exposure (EV):** use it like the exposure compensation on a camera.
   Switch on **Automatic: hold the face level** only if your camera's own automatic
-  exposure is off. Never run both.
-- **Background (EV):** stay within about half a stop (-0.5 to +0.5) and light the wall
-  for the rest.
+  exposure is off. Never run both. While the automatic runs, the slider is hidden and
+  your face goes to **Face target p90 (IRE)**.
+- **Lighting > Face light (EV):** lights your face like a lamp close to it and fades
+  out over **Face light reach**.
+- **Lighting > Background vs. you (EV):** stay within about half a stop (-0.5 to
+  +0.5) and light the wall for the rest.
 - **Far from the camera?** Tick **Auto frame (fill the frame with the face)** in the
   Framing section.
 

@@ -55,7 +55,8 @@ the camera picture through unchanged until a key is entered.
    LUTs). The values land in the sliders, and the list returns to "(keep the current
    values)". A freshly added filter starts with Smoothing 0.60 and Sharpen 0.25, and
    without key light, tone correction or LUTs; Natural sets Smoothing to 0.20.
-   A preset also sets Exposure and Background back to 0, so choose the preset first.
+   A preset also sets Exposure, Face light and Background vs. you back to 0, so choose
+   the preset first.
 2. **Compare:** tick **A/B: show the original** to see the untouched camera picture;
    untick it to go back.
 3. **Skin:** move **Smoothing** until the skin looks calm while the face keeps its
@@ -63,12 +64,15 @@ the camera picture through unchanged until a key is entered.
    sharpen in the camera.
 4. **Light:** with **Stream**, the key light is on and **Follow the room's light
    (side)** is ticked. After a few seconds the side locks; reopen the properties and
-   the Relight group shows, for example, "Room light: from the left, locked".
+   the Lighting group shows, for example, "Room light: from the left, locked".
 5. **Exposure:** use **Exposure (EV)** like the exposure compensation on a camera.
    Switch on **Automatic: hold the face level** only if your camera's own automatic
-   exposure is off. Never run both.
-6. **Background:** **Background (EV)** darkens or lifts everything outside you. Stay
-   within about half a stop (-0.5 to +0.5) and light the wall for the rest.
+   exposure is off. Never run both. While the automatic runs, the Exposure slider is
+   hidden and your face goes to **Face target p90 (IRE)**.
+6. **Face light and background:** **Face light (EV)** lights your face like a lamp
+   close to it and fades out over **Face light reach**. **Background vs. you (EV)**
+   darkens or lifts everything outside you. Stay within about half a stop (-0.5 to
+   +0.5) and light the wall for the rest.
 7. **Far from the camera?** Tick **Auto frame** in the Framing group. KlarCam crops
    around your face once, locks that frame and eases it in.
 

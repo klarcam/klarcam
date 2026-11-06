@@ -18,11 +18,10 @@ Contents:
 [Presets](#presets-natural-and-stream) ·
 [Top of the filter](#top-of-the-filter) ·
 [Framing](#framing) ·
-[Exposure](#exposure-first-in-the-chain) ·
+[Lighting](#lighting) ·
 [Skin](#skin) ·
 [Skin tone](#skin-tone-vectorscope) ·
 [Eyes and teeth](#eyes-and-teeth) ·
-[Relight](#relight-virtual-key-light) ·
 [Color LUTs](#color-luts) ·
 [Vectorscope](#vectorscope-rec709-skin-band-sector) ·
 [Measurement](#measurement-broadcast-protocol-v1) ·
@@ -33,8 +32,8 @@ Contents:
 ## Before you start
 
 **Order of processing.** KlarCam works on each frame in this order: auto frame, face
-tracking, noise reduction, exposure and background, smoothing and sharpening, key
-light, skin tone, color LUTs, eyes and teeth, film look. The vectorscope and the
+tracking, noise reduction, exposure, face light and background, smoothing and
+sharpening, key light, skin tone, color LUTs, eyes and teeth, film look. The vectorscope and the
 measurement read the result. A control further down the list works on what the
 earlier ones left.
 
@@ -44,7 +43,7 @@ earlier ones left.
   change from frame to frame and lets motion through. It measures the noise on the
   static background: below about 2/255 (a clean camera) it does nothing, from about
   4.5/255 (a webcam in dim light) it works at full strength. The app shows the state
-  in its Exposure section: "Denoise: automatic, noise .../255, strength ... %".
+  in its Camera section: "Denoise: automatic, noise .../255, strength ... %".
 - **Fine texture.** After the smoothing, a fixed share of the finest texture (pores,
   stubble) always goes back in, so the skin keeps its grain.
 - **Color over brightness.** The smoothing evens out color more than brightness, so
@@ -65,7 +64,9 @@ tone correction and LUTs.
 | Exposure (EV) | 0 | 0 | 0 |
 | Automatic: hold the face level | off | off | off |
 | Face target p90 (IRE) | 67 | 67 | 67 |
-| Background (EV) | 0 | 0 | 0 |
+| Face light (EV) | 0 | 0 | 0 |
+| Face light reach (face widths) | 2.00 | 2.00 | 2.00 |
+| Background vs. you (EV) | 0 | 0 | 0 |
 | Background falloff | 0 | 0 | 0 |
 | Smoothing | 0.60 | 0.20 | 0.27 |
 | Sharpen (edges) | 0.25 | 0.30 | 0.55 |
@@ -96,8 +97,8 @@ tone correction and LUTs.
 A preset leaves alone: Framing (auto frame, face height and the locked frame), the
 beard settings, the measured room-light side, A/B, the vectorscope, the measurement
 and the debug view. Your custom LUT file stays loaded, but its amount is set to the
-preset's 0. A preset does set Exposure and Background, so choose the preset first and
-set the exposure after.
+preset's 0. A preset does set Exposure, Face light and Background vs. you, so choose
+the preset first and set the levels after.
 
 ## Top of the filter
 
@@ -140,15 +141,43 @@ everything after them work on the framed picture; the person mask even gets fine
 At 1080p a 2x crop is 960 x 540 pixels scaled up, so the picture gets softer; a 4K
 camera keeps its sharpness at 2x.
 
-## Exposure (first in the chain)
+## Lighting
+
+Every control that sets a level, in the order the chain applies them: the exposure of
+the whole frame and its automatic, the face light, the background relative to you,
+and the key light. Until 0.3.0 these were two groups, Exposure and Relight.
 
 | Control | Range | Default | What it changes |
 |---|---|---|---|
-| **Exposure (EV)** | -2 to +2 EV | 0 | Brightness of the whole frame, like ISO or exposure compensation on a camera. Applied as gain in linear light with a soft shoulder: highlights roll into white instead of clipping hard. With the automatic on, this slider is its compensation and shifts the target. |
-| **Automatic: hold the face level** | on / off | off | Holds the brightness of your face skin at the target. Slow near the target (about two seconds), faster while far off (a lamp switched on), frozen without a face and while your head moves fast. Measured on the processed output, so LUTs and the film look are included. Switched off, it keeps the level it reached: its EV moves into the Exposure slider. |
-| **Face target p90 (IRE)** | 50 to 80 | 67 | The face level the automatic holds: the level 90 % of your face skin stays below, in IRE (0 = black, 100 = white). |
-| **Background (EV)** | -1.5 to +1.5 EV | 0 | Exposure of everything outside your silhouette, relative to you. Negative separates you from the wall; positive lifts the wall, and its noise with it. |
-| **Background falloff** | 0 to 1 | 0 | 0: the same Background EV everywhere outside you. 1: none right next to your head, growing to the full value about two face widths away, like a vignette. |
+| **Exposure (EV)** | -2 to +2 EV | 0 | Brightness of the whole frame, first in the chain, like ISO or exposure compensation on a camera. Applied as gain in linear light with a soft shoulder: highlights roll into white instead of clipping hard. Hidden while the automatic runs. |
+| **Automatic: hold the face level** | on / off | off | Exposes the whole frame so that your face skin holds the target. It starts from the Exposure value, so nothing changes when you switch it on, and ignores the slider from then on. Slow near the target (about two seconds), faster while far off (a lamp switched on), frozen without a face and while your head moves fast. Measured on the processed output, so LUTs and the film look are included. Switched off, it hands the level it reached back to the Exposure slider, so nothing jumps. The level is also saved with the settings, so after a restart the automatic continues from there. |
+| **Face target p90 (IRE)** | 50 to 80 | 67 | The face level the automatic holds: the level 90 % of your face skin stays below, in IRE (0 = black, 100 = white). Shown while the automatic is on. |
+| **Face light (EV)** | 0 to 1.5 EV | 0 | A soft light on your face that fades out with the distance from it: full on the face, less on the neck and the shoulders, none from the reach on. Like a lamp close to your face. It uses no mask, so it draws no edge along your silhouette. With the automatic on, your face stays at its target and the face light darkens everything else relative to it. |
+| **Face light reach (face widths)** | 1.2 to 3 | 2.00 | Where the face light has faded out, in face widths from the face's center: 1.2 the head alone, 2 down to the collar, 3 the shoulders too. |
+| **Background vs. you (EV)** | -1.5 to +1.5 EV | 0 | Everything outside your silhouette, relative to you. Negative darkens the room and separates you from the wall; positive lifts the wall, and its noise with it. Called **Background (EV)** before 0.3.0. |
+| **Background falloff** | 0 to 1 | 0 | 0: the same Background vs. you value everywhere outside you. 1: none right next to your head, growing to the full value about two face widths away, like a vignette. |
+
+### Key light
+
+A line in the group introduces it: a virtual key light computed from the 3D shape of
+your face. It models the face, one side brighter and the other darker, without making
+it brighter overall. It stays on your head; your body gets neither light nor shadow
+from it.
+
+| Control | Range | Default | What it changes |
+|---|---|---|---|
+| **Key light strength** | 0 to 1 | 0 | Strength of the key light. 0 = off. |
+| **Light direction** | -1 to +1 | 0.60 | Left (-) to right (+) in the camera's own, unmirrored picture. With **Follow the room's light (side)** on, only how far to the side the light comes from; the side itself is measured. |
+| **Follow the room's light (side)** | on / off | on | Puts the key light on the side your room's light comes from. Measured on your face once (a few seconds), then locked, so it never changes sides during a stream. The locked side is saved with the scene collection. Off: the sign of Light direction is the side. |
+| **Measure again** | button | | Measures the room's light anew over a few seconds, for example after you moved a lamp or the desk. The light swings over to the result once and stays there. |
+| **Swap side** | button | | Puts the light on the other side if you like that better. Stays until you measure again or switch the automatic off. |
+| **Light height** | 0 to 1 | 0.40 | From the side (0) to above (1). |
+| **Spread (beyond the face)** | 1.0 to 2.5 | 1.50 | How far the light reaches beyond the face, over the rest of the head. At 1.0 the shading ends at the face and leaves the ears out; higher values reach the ears, and also toward the collar. |
+| **Edge tightness** | 0 to 1 | 0.50 | How tightly the light is cut to your silhouette. Higher values cut it more sharply at the edge; lower values let it fade out into the background. |
+
+While **Follow the room's light (side)** is on, a status line with the two buttons
+below it shows "Room light: measuring", "from the left, locked", "from the right,
+locked" or "frontal, locked (the slider's sign is the side)".
 
 **When to touch it.**
 
@@ -156,14 +185,30 @@ camera keeps its sharpness at 2x.
   exposure, auto ISO), keep KlarCam's automatic off and use **Exposure (EV)** as a
   fixed trim. KlarCam's automatic is meant for a camera with a fixed exposure. Two
   automatics work against each other. In Teams, also switch off "Adjust brightness".
+- **The automatic and Exposure:** while the automatic runs, the Exposure slider is
+  hidden and has no effect, and your face goes to the target shown. Until 0.3.0 the
+  slider shifted the target, so a value left on it held the face below the target
+  shown; such a scene now reaches its target over a few seconds after the start.
 - **Face target:** the default of 67 IRE sits in the band of the measurement's set N
   (65 to 68).
-- **Background:** stay within about half a stop (-0.5 to +0.5 EV) and light the wall
-  for the rest. The further you push it, the more the edge of your silhouette shows.
-  Against a strongly darkened wall, a moving arm or a white shirt can flicker at the
-  edge: that is the limit of the person detection, not of the setting.
+- **Face light, Background vs. you or the key light?** The face light brightens your
+  face and fades out softly, with no edge. Background vs. you changes the room outside
+  your silhouette, along the silhouette's edge. The key light models the face, one
+  side brighter and the other darker, without brightening it overall.
+- **Background vs. you:** stay within about half a stop (-0.5 to +0.5 EV) and light
+  the wall for the rest. The further you push it, the more the edge of your silhouette
+  shows. Against a strongly darkened wall, a moving arm or a white shirt can flicker at
+  the edge: that is the limit of the person detection, not of the setting.
 - **Background falloff:** raise it when a light or dark halo shows next to your head
-  at stronger Background values. Its best value depends on the room.
+  at stronger Background vs. you values. Its best value depends on the room.
+- **Key light:** keep **Follow the room's light (side)** on. A key light opposite to
+  the real light flattens the face and darkens its highlights. After moving a lamp or
+  your desk, click **Measure again**; if you prefer the other side, click **Swap
+  side**. When the room's light is measured as frontal, the sign of **Light
+  direction** decides the side.
+- **Left and right** refer to the camera's own picture, which is what the filter
+  receives. A horizontal flip on the source in OBS, or a mirrored self-view in a call
+  app, shows them swapped on your screen; the picture others receive is not mirrored.
 
 ## Skin
 
@@ -236,39 +281,6 @@ band around the skin tone line in the upper left quadrant. **Skin band from** an
 crisper eyes or toward 1.05 when the skin around the eyes looks too sharp. Stream
 uses Eye sharpen 0.62, Remove eye reflections 0.33, Eye brightening 0.21 and Teeth
 whitening 0.53.
-
-## Relight (virtual key light)
-
-A virtual key light computed from the 3D shape of your face. It models the face, one
-side brighter and the other darker, without making it brighter overall. It stays on
-your head; your body gets neither light nor shadow from it.
-
-| Control | Range | Default | What it changes |
-|---|---|---|---|
-| **Key light strength** | 0 to 1 | 0 | Strength of the key light. 0 = off. |
-| **Light direction** | -1 to +1 | 0.60 | Left (-) to right (+) in the camera's own, unmirrored picture. With **Follow the room's light (side)** on, only how far to the side the light comes from; the side itself is measured. |
-| **Follow the room's light (side)** | on / off | on | Puts the key light on the side your room's light comes from. Measured on your face once (a few seconds), then locked, so it never changes sides during a stream. The locked side is saved with the scene collection. Off: the sign of Light direction is the side. |
-| **Measure again** | button | | Measures the room's light anew over a few seconds, for example after you moved a lamp or the desk. The light swings over to the result once and stays there. |
-| **Swap side** | button | | Puts the light on the other side if you like that better. Stays until you measure again or switch the automatic off. |
-| **Light height** | 0 to 1 | 0.40 | From the side (0) to above (1). |
-| **Spread (beyond the face)** | 1.0 to 2.5 | 1.50 | How far the light reaches beyond the face, over the rest of the head. At 1.0 the shading ends at the face and leaves the ears out; higher values reach the ears, and also toward the collar. |
-| **Edge tightness** | 0 to 1 | 0.50 | How tightly the light is cut to your silhouette. Higher values cut it more sharply at the edge; lower values let it fade out into the background. |
-
-While **Follow the room's light (side)** is on, a status line with the two buttons
-below it shows "Room light: measuring", "from the left, locked", "from the right,
-locked" or "frontal, locked (the slider's sign is the side)".
-
-**When to touch it.**
-
-- Keep **Follow the room's light (side)** on. A key light opposite to the real light
-  flattens the face and darkens its highlights.
-- After moving a lamp or your desk, click **Measure again**. If you prefer the other
-  side, click **Swap side**.
-- When the room's light is measured as frontal, the sign of **Light direction**
-  decides the side.
-- Left and right refer to the camera's own picture, which is what the filter
-  receives. A horizontal flip on the source in OBS, or a mirrored self-view in a call
-  app, shows them swapped on your screen; the picture others receive is not mirrored.
 
 ## Color LUTs
 
@@ -364,9 +376,9 @@ live.
 ## The KlarCam app
 
 The app runs the same processing with the same controls, in collapsible sections in
-the right-hand panel: Camera, Virtual camera, Framing, Exposure, Skin, Skin tone
-(vectorscope), Relight, Eyes and teeth, Look, Vectorscope, Measurement (protocol v1),
-Debug and Status. Its defaults are the **Stream** look. This part covers what is
+the right-hand panel: Camera, Virtual camera, Framing, Lighting, Skin, Skin tone
+(vectorscope), Eyes and teeth, Look, Vectorscope, Measurement (protocol v1), Debug and
+Status. Its defaults are the **Stream** look. This part covers what is
 different and what only the app has.
 
 ### Top bar
@@ -379,7 +391,7 @@ different and what only the app has.
 | **Look: Natural / Stream** | Applies a built-in look, see [Presets](#presets-natural-and-stream). |
 | **1 / 2 / 3** | Your own looks. Grayed out while a slot is empty. |
 | **Save...** | Saves the current settings as Look 1, 2 or 3, replacing what is there. |
-| **Match set N** (named after the chosen set) / **Stop** | For the measurement protocol: a few seconds of small steps on Exposure (face p90), Background (wall p50, keeping the distance between face and wall), Key light strength (key to shadow cheek ratio) and Pull to skin line (skin hue), from the live measurement of the output, until everything sits in the set's bands. Then it says what it could not reach. Choose the set in the Measurement section and put the wall box on bare wall first. |
+| **Match set N** (named after the chosen set) / **Stop** | For the measurement protocol: a few seconds of small steps on Exposure (face p90), Background vs. you (wall p50, keeping the distance between face and wall), Key light strength (key to shadow cheek ratio) and Pull to skin line (skin hue), from the live measurement of the output, until everything sits in the set's bands. Then it says what it could not reach. Choose the set in the Measurement section and put the wall box on bare wall first. |
 
 Like a preset in OBS, a look leaves the beard settings, Framing, the measured
 room-light side, A/B, the vectorscope and the measurement as they are.
@@ -391,7 +403,8 @@ room-light side, A/B, the vectorscope and the measurement as they are.
 | **Device** | The camera KlarCam reads: webcams and capture cards, and software cameras such as NVIDIA Broadcast or OBS Virtual Camera. **Refresh** lists cameras plugged in later. |
 | **Format** | Resolution, frame rate and pixel format of the camera. 1080p or more works best. |
 
-The line below shows the camera's state or an error.
+The line below shows the camera's state or an error, and the noise reduction's state:
+"Denoise: automatic, noise .../255, strength ... %".
 
 ### Virtual camera
 
@@ -404,7 +417,7 @@ The line below shows the camera's state or an error.
 While it streams, the section shows "Streaming 1920x1080, N frames" and either "An app
 is receiving the camera" or "No app is reading the camera right now".
 
-### Framing, Exposure, Skin, Skin tone, Relight, Eyes and teeth
+### Framing, Lighting, Skin, Skin tone, Eyes and teeth
 
 The same controls as in OBS, with these differences:
 
@@ -413,14 +426,15 @@ The same controls as in OBS, with these differences:
 | Auto frame | **Auto frame (fill the frame with the face)** |
 | Face height (share of frame) | **Framing (face height)**. Changing it measures the frame anew. |
 | Frame status | "Frame: 1.29x, locked (now 1.24x)" also shows the zoom in use while it eases. |
-| Face target p90 (IRE) | Shown only while the automatic is on, with the automatic's current EV below it. |
-| (none) | Exposure section: "Denoise: automatic, noise .../255, strength ... %". |
+| Face target p90 (IRE) | The automatic's current EV below it ("Automatic: +0.25 EV"). |
+| (none) | Camera section: "Denoise: automatic, noise .../255, strength ... %". |
+| Key light line | **Key light (virtual, modeled on your face)** above its controls. |
 | Beard detected: N % | "detected: N %" next to the checkbox. |
 | Room light status | "Room light: measuring (...)" also shows the measured value. **Swap side** appears once the side is locked. |
 | Spread (beyond the face) | **Spread beyond the face** |
 | Eye brightening (whites) | **Eye brightening** |
 
-The Relight and Eyes and teeth sections start collapsed.
+The Eyes and teeth section starts collapsed.
 
 ### Look
 
@@ -480,12 +494,15 @@ with a key shows in red above that line.
 
 ## How the controls work together
 
-- **Presets and looks** overwrite the look controls, Exposure and Background
-  included. They keep Framing, the beard settings, the room-light side, A/B, the
-  vectorscope and the measurement. Choose the look first, then set the exposure.
-- **Exposure (EV) and the automatic:** with the automatic on, the slider is its
-  compensation. Switching the automatic off moves the level it reached into the
-  slider.
+- **Presets and looks** overwrite the look controls, Exposure, Face light and
+  Background vs. you included. They keep Framing, the beard settings, the room-light
+  side, A/B, the vectorscope and the measurement. Choose the look first, then set the
+  levels.
+- **Exposure (EV) and the automatic:** the automatic starts from the slider's value
+  and then holds the face at the target alone; the slider is hidden meanwhile.
+  Switching the automatic off moves the level it reached into the slider.
+- **Face light and the automatic:** with the automatic on, the face stays at its
+  target, and the face light darkens everything else relative to it.
 - **Camera exposure and KlarCam's automatic:** use one of them, never both.
 - **Light direction and Follow the room's light:** with the automatic on, the
   slider sets only how far to the side; off, its sign also sets the side.
@@ -497,7 +514,7 @@ with a key shows in red above that line.
 - **Beard** takes the lower face out of the smoothing and the skin statistics only;
   tone correction, key light and LUTs still cover it. A high **Sharpen (edges)**
   makes stubble crisper.
-- **Background (EV) and Background falloff:** the falloff keeps the background
+- **Background vs. you and Background falloff:** the falloff keeps the background
   change away from your head, where the silhouette's edge would show.
 - **LUTs** come after the skin-tone correction, in the order contrast look, red,
   yellow, custom, each on its own region.

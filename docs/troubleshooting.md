@@ -185,11 +185,12 @@ issue.
   measures once and then locks. After moving a lamp or the desk, click **Measure
   again**; to choose the other side yourself, click **Swap side**.
 - **A halo around the head when the background is darker or brighter.** Stay within
-  about half a stop of **Background (EV)** (-0.5 to +0.5), raise **Background
-  falloff**, and light the wall for the rest.
+  about half a stop of **Background vs. you (EV)** (-0.5 to +0.5), raise **Background
+  falloff**, and light the wall for the rest. **Face light (EV)** lifts the face
+  without any edge.
 - **Arms or shoulders flicker at the edge with a dark background.** That is the limit
   of the person detection, most visible with a white shirt against a strongly
-  darkened wall. Use a smaller **Background (EV)** value.
+  darkened wall. Use a smaller **Background vs. you (EV)** value.
 - **The face looks flat or waxy.** Lower **Smoothing** and compare with A/B.
 - **Stubble looks too crisp.** Lower **Sharpen (edges)**. The beard detection already
   keeps stubble out of the smoothing; check it with **Debug view > Show smoothing
