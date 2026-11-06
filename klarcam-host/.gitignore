@@ -1,0 +1,5 @@
+# Build output and the libobs SDK that tools/make-libobs-sdk.ps1 makes.
+# SPDX-License-Identifier: GPL-2.0-or-later
+# Copyright (C) 2026 Lars von Thienen
+.deps/
+build/

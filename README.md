@@ -52,7 +52,7 @@ The same frame, once straight from the camera and once through KlarCam.
 |---|---|---|
 | For | Zoom, Microsoft Teams, Google Meet in Chrome or Edge, and other apps that use a camera | Streaming and recording with OBS Studio |
 | How | The app reads your camera and sends the processed picture to the virtual camera **KlarCam**. Pick that camera in your call app. | Add the effect filter **KlarCam** to your camera source. |
-| Installer | `KlarCam-Setup-0.3.0.exe`, which can also install the filter for OBS Studio | `KlarCam-Filter-Setup-0.3.0.exe`, or the full setup |
+| Installer | `KlarCam-Setup-0.4.0.exe`, which can also install the filter for OBS Studio | `KlarCam-Filter-Setup-0.4.0.exe`, or the full setup |
 | Start here | [App quick start](docs/quick-start-app.md) | [OBS quick start](docs/quick-start-obs.md) |
 
 Both run the same processing with the same controls, and one license key covers
@@ -62,8 +62,8 @@ both.
 
 | File | Installs | Get it |
 |---|---|---|
-| `KlarCam-Setup-0.3.0.exe` (about 35 MB) | The app with the virtual camera, optionally the filter for OBS Studio | [GitHub release](https://github.com/klarcam/klarcam/releases/latest) or [klarcam.com](https://klarcam.com/download/KlarCam-Setup-0.3.0.exe) (the same file) |
-| `KlarCam-Filter-Setup-0.3.0.exe` (about 19 MB) | Only the filter for OBS Studio | [GitHub release](https://github.com/klarcam/klarcam/releases/latest) |
+| `KlarCam-Setup-0.4.0.exe` (about 35 MB) | The app with the virtual camera, optionally the filter for OBS Studio | [GitHub release](https://github.com/klarcam/klarcam/releases/latest) or [klarcam.com](https://klarcam.com/download/KlarCam-Setup-0.4.0.exe) (the same file) |
+| `KlarCam-Filter-Setup-0.4.0.exe` (about 19 MB) | Only the filter for OBS Studio | [GitHub release](https://github.com/klarcam/klarcam/releases/latest) |
 
 Install one of the two: the app setup already includes the filter for OBS Studio, and
 the filter setup does not install while the KlarCam app is installed.
@@ -72,7 +72,7 @@ The release notes list the SHA-256 of each file. To check a download, run this i
 PowerShell in your Downloads folder and compare the result:
 
 ```powershell
-Get-FileHash .\KlarCam-Setup-0.3.0.exe
+Get-FileHash .\KlarCam-Setup-0.4.0.exe
 ```
 
 The installers are not code-signed yet. Windows SmartScreen may therefore show
@@ -95,7 +95,7 @@ button. Check the SHA-256 first.
 
 ### The app, with the virtual camera
 
-1. Run `KlarCam-Setup-0.3.0.exe`. It installs KlarCam for your Windows user in
+1. Run `KlarCam-Setup-0.4.0.exe`. It installs KlarCam for your Windows user in
    `%LOCALAPPDATA%\Programs\KlarCam`.
 2. If OBS Studio is installed, the setup offers **Install the filter for OBS Studio
    (OBS 33 or newer; close OBS first)**. Close OBS before you go on. With that box
@@ -109,7 +109,7 @@ button. Check the SHA-256 first.
 ### Only the filter for OBS Studio
 
 1. Close OBS Studio.
-2. Run `KlarCam-Filter-Setup-0.3.0.exe`. It installs the filter to
+2. Run `KlarCam-Filter-Setup-0.4.0.exe`. It installs the filter to
    `%ProgramData%\obs-studio\plugins\klarcam`, and nothing else: no app, no virtual
    camera. OBS Studio must be installed.
 3. Start OBS and add the filter to your camera: [OBS quick start](docs/quick-start-obs.md).
@@ -122,7 +122,7 @@ OBS Studio ticked: it replaces **KlarCam Filter**. To go the other way, uninstal
 
 Close OBS and run the new setup of the kind you have: it installs over the old
 version. Your scenes keep their KlarCam filters and settings, and your key stays. In
-0.2.0 the filter setup was called **KlarCam OBS Filter**; from 0.3.0 on it is
+0.2.0 the filter setup was called **KlarCam OBS Filter**; from 0.4.0 on it is
 **KlarCam Filter**, and the update renames its entry in Windows' list of apps.
 
 ### Uninstall

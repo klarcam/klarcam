@@ -87,12 +87,12 @@ If the tracker line reports another error, copy it into a bug report.
    OBS is installed. The filter setup does not install while the KlarCam app is
    installed: the app setup includes the filter, so run it again and tick the filter.
 5. **OBS's log:** **Help > Log Files > View Current Log**, search for `[KlarCam]`. The
-   line `[KlarCam] plugin loaded, version 0.3.0 (filter host; the KlarCam engine starts
+   line `[KlarCam] plugin loaded, version 0.4.0 (filter host; the KlarCam engine starts
    with the first filter)` means OBS found the filter.
 
 ## The KlarCam engine (filter in OBS)
 
-Since 0.3.0 the filter in OBS has two parts. OBS loads `klarcam.dll`, which hands each
+Since 0.4.0 the filter in OBS has two parts. OBS loads `klarcam.dll`, which hands each
 frame to the KlarCam engine, `klarcam-engine.exe` in the plugin folder's `engine`
 folder. The engine processes the frame and gives it back within the same OBS frame.
 It starts with the first KlarCam filter and ends with OBS, also when OBS crashes;

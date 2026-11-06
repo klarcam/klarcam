@@ -6,7 +6,7 @@ apps can use. Every control is explained in the [parameter reference](parameters
 
 ## 1. Install and start
 
-1. Run `KlarCam-Setup-0.3.0.exe`. It installs for your Windows user, no admin rights
+1. Run `KlarCam-Setup-0.4.0.exe`. It installs for your Windows user, no admin rights
    needed. If you use OBS Studio, tick **Install the filter for OBS Studio**: the app
    setup includes the filter and replaces a filter-only install (**KlarCam Filter**).
 2. Start **KlarCam** from the Start menu.

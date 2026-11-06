@@ -6,8 +6,8 @@ detail in the [parameter reference](parameters.md).
 ## 1. Install
 
 1. Close OBS Studio.
-2. Run `KlarCam-Filter-Setup-0.3.0.exe` (installs only the filter), or
-   `KlarCam-Setup-0.3.0.exe` with **Install the filter for OBS Studio** ticked if you
+2. Run `KlarCam-Filter-Setup-0.4.0.exe` (installs only the filter), or
+   `KlarCam-Setup-0.4.0.exe` with **Install the filter for OBS Studio** ticked if you
    also want the app with its virtual camera.
 3. KlarCam needs OBS Studio 33 or newer. **Help > About** in OBS shows your version.
 

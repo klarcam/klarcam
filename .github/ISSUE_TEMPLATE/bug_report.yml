@@ -39,7 +39,7 @@ body:
     attributes:
       label: KlarCam version
       description: Windows Settings > Apps > Installed apps, or the OBS log line "[KlarCam] plugin loaded, version ...".
-      placeholder: "0.3.0"
+      placeholder: "0.4.0"
     validations:
       required: true
   - type: input
